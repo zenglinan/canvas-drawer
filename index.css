@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+canvas {
+  background: RGB(250, 249, 222);
+  position: relative;
+}
+
+svg.tool {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-block;
+  border-radius: 35%;
+  padding: 6px;
+}
+
+svg.tool:hover {
+  background: rgb(222, 222, 222);
+  cursor: pointer;
+}
+
+.currentTool {
+  background-color: rgb(26,159,255) !important;
+}
