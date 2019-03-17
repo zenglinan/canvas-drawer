@@ -35,6 +35,5 @@ svg.tool:hover {
 }
 
 .currentTool {
-  /* background-color: rgb(26, 159, 255) !important; */
   fill: rgb(26, 159, 255);
 }

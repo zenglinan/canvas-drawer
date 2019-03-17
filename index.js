@@ -123,7 +123,7 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
   }
   function clearCircle(canvas, context, pos) {
     context.fillStyle = "rgb(250, 249, 222)";
-    context.fillRect(pos.x, pos.y, 15, 15);
+    context.fillRect((pos.x-toolSize*7.5), (pos.y-toolSize*7.5), toolSize*15, toolSize*15);
   }
   function drawLine(canvas, context, lastPointObj, x, y) { // 画线
     context.strokeStyle = "black";
