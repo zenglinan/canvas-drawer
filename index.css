@@ -4,8 +4,20 @@
   box-sizing: border-box;
 }
 
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+}
+
+body {
+  overflow: hidden;
+}
+
 canvas {
   background: RGB(250, 249, 222);
+  display: block;
   position: relative;
 }
 
@@ -23,5 +35,6 @@ svg.tool:hover {
 }
 
 .currentTool {
-  background-color: rgb(26,159,255) !important;
+  /* background-color: rgb(26, 159, 255) !important; */
+  fill: rgb(26, 159, 255);
 }

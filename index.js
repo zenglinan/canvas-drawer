@@ -1,12 +1,14 @@
 let canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-let useTool = "";  // 使用的工具
+let useTool = "pencil";  // 使用的工具
 let ifDraw = false;  // 是否落笔的标志
 let ifClear = false;  // 是否擦除的标志
 let lastPoint;  // 记录上一个点
+let toolSize = 1;
 
-
+// 初始化画板
 initCanvas(canvas);
+// 给PC端和移动端的画笔和橡皮绑定事件
 pencil.addEventListener('click', function () {
   useTool = "pencil";
   eraser.classList.remove('currentTool');
@@ -27,6 +29,7 @@ eraser.addEventListener('touchend', function () {
   pencil.classList.remove('currentTool');
   this.classList.add('currentTool');
 }, false);
+// 监听用户操作
 listenToUser(canvas, ifDraw, ifClear, lastPoint);
 
 function initCanvas(canvas) {
@@ -37,65 +40,67 @@ function initCanvas(canvas) {
     setCanvasWidth();
   }
   function setCanvasWidth() { // 设置canvas宽高为满屏
-    let pageWidth = document.documentElement.clientWidth;
-    let pageHeight = document.documentElement.clientHeight - canvas.offsetTop;
+    let pageWidth = (document.documentElement.clientWidth - canvas.offsetLeft);
+    let pageHeight = (document.documentElement.clientHeight - canvas.offsetTop);
     canvas.width = pageWidth;
     canvas.height = pageHeight;
   }
 }
 function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
   if (document.documentElement.ontouchstart !== undefined) {
-    canvas.ontouchstart = function (e) { // 画点 记录位置
-      let pos = getMousePos(e);
-      if (useTool === "pencil") {
-        ifDraw = true;
-        drawCircle(canvas, context, { x: pos.x, y: pos.y });
-        lastPoint = { x: pos.x, y: pos.y };
-      } else if (useTool === "eraser") {
-        ifClear = true;
-        clearCircle(canvas, context, { x: pos.x, y: pos.y });
-      }
+    // 移动端
+    canvas.ontouchstart = function (e) {
+      handleDown(e);
     }
     canvas.ontouchmove = function (e) { // 画线 更新位置
-      let pos = getMousePos(e);
-      if (ifDraw) {
-        drawLine(canvas, context, lastPoint, pos.x, pos.y);
-        lastPoint = { x: pos.x, y: pos.y };  // 更新上一个点
-      } else if (ifClear) {
-        clearCircle(canvas, context, { x: pos.x, y: pos.y });
-      }
+      handleMove(e);
+
     }
     canvas.ontouchend = function (e) {
-      ifDraw = false;
-      ifClear = false;
+      // 置零标志位
+      handleEnd();
     }
   } else {
-    canvas.onmousedown = function (e) { // 画点 记录位置
-      let pos = getMousePos(e);
-      if (useTool === "pencil") {
-        ifDraw = true;
-        drawCircle(canvas, context, { x: pos.x, y: pos.y });
-        lastPoint = { x: pos.x, y: pos.y };
-      } else if (useTool === "eraser") {
-        ifClear = true;
-        clearCircle(canvas, context, { x: pos.x, y: pos.y });
-      }
+    // PC端
+    canvas.onmousedown = function (e) {
+      handleDown(e);
     }
     canvas.onmousemove = function (e) { // 画线 更新位置
-      let pos = getMousePos(e);
-      if (ifDraw) {
-        drawLine(canvas, context, lastPoint, pos.x, pos.y);
-        lastPoint = { x: pos.x, y: pos.y };  // 更新上一个点
-      } else if (ifClear) {
-        clearCircle(canvas, context, { x: pos.x, y: pos.y });
-      }
+      handleMove(e);
     }
     canvas.onmouseup = function (e) {
-      ifDraw = false;
-      ifClear = false;
+      handleEnd();
     }
   }
 
+  function handleDown(e) {
+    let pos = getMousePos(e);
+    if (useTool === "pencil") {
+      // 画点 记录位置
+      ifDraw = true;
+      drawCircle(canvas, context, { x: pos.x, y: pos.y });
+      lastPoint = { x: pos.x, y: pos.y };
+    } else if (useTool === "eraser") {
+      // 擦除
+      ifClear = true;
+      clearCircle(canvas, context, { x: pos.x, y: pos.y });
+    }
+  }
+  function handleMove(e) {
+    let pos = getMousePos(e);
+    if (ifDraw) {
+      // 画线 记录位置
+      drawLine(canvas, context, lastPoint, pos.x, pos.y);
+      lastPoint = { x: pos.x, y: pos.y };  // 更新上一个点
+    } else if (ifClear) {
+      // 擦除
+      clearCircle(canvas, context, { x: pos.x, y: pos.y });
+    }
+  }
+  function handleEnd() {
+    ifDraw = false;
+    ifClear = false;
+  }
   function getMousePos(e) {
     if ('touches' in e) {
       return {
@@ -113,7 +118,7 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
   function drawCircle(canvas, context, pos) {  // 画圆
     context.fillStyle = "black";
     context.beginPath();
-    context.arc(pos.x, pos.y, 2, 0, Math.PI * 2);
+    context.arc(pos.x, pos.y, toolSize, 0, Math.PI * 2);
     context.fill();
   }
   function clearCircle(canvas, context, pos) {
@@ -122,7 +127,7 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
   }
   function drawLine(canvas, context, lastPointObj, x, y) { // 画线
     context.strokeStyle = "black";
-    context.lineWidth = 4;
+    context.lineWidth = toolSize;
     context.beginPath();
     context.moveTo(lastPointObj.x, lastPointObj.y);
     context.lineTo(x, y);
