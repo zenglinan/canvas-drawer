@@ -7,9 +7,10 @@ let lastPoint;  // 记录上一个点
 let color = 'black'
 let size = 1;
 
-context.fillRect(0, 0, canvas.width, canvas.height);
 // 初始化画板
 initCanvas(canvas);
+context.fillStyle = 'white';
+context.fillRect(0, 0, canvas.width, canvas.height);
 // 给PC端和移动端的画笔和橡皮绑定事件
 pencil.addEventListener('click', function () {
   useTool = "pencil";
@@ -57,7 +58,7 @@ clear.addEventListener('click', function () {
 download.onclick = function(){
   var link = document.createElement('a');
   link.download = 'myCanvas.jpg';
-  link.href = document.getElementById('canvas').toDataURL()
+  link.href = document.getElementById('canvas').toDataURL('image/jpg');
   link.click();
 }
 function initCanvas(canvas) {

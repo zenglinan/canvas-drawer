@@ -4,7 +4,7 @@ ul,ol{ list-style: none; }
 html { min-width: 100px;}
 body {  overflow: hidden;}
 header {  padding: .06rem .1rem; display: flex; justify-content: space-between; align-items: center;}
-canvas {  background: RGB(250, 249, 222);  display: block;  position: relative;}
+canvas {  display: block;  position: relative;}
 svg.tool {  width: .3rem;  height: .3rem;  margin-right: .18rem;  display: inline-block;  border-radius: 35%;}
 svg.tool:hover {  background: rgb(222, 222, 222);  cursor: pointer;}
 #clear:hover { fill: red !important; }
