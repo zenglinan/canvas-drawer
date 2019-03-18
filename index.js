@@ -4,7 +4,8 @@ let useTool = "pencil";  // 使用的工具
 let ifDraw = false;  // 是否落笔的标志
 let ifClear = false;  // 是否擦除的标志
 let lastPoint;  // 记录上一个点
-let toolSize = 1;
+let color = 'black'
+let size = 1;
 
 // 初始化画板
 initCanvas(canvas);
@@ -31,7 +32,20 @@ eraser.addEventListener('touchend', function () {
 }, false);
 // 监听用户操作
 listenToUser(canvas, ifDraw, ifClear, lastPoint);
-
+// 调整画笔粗细
+sizeDiv.addEventListener('click',function(){
+  size < 5 ? (size ++) : (size = 1);
+  sizeDiv.getElementsByTagName('span')[0].innerText = size;
+},false);
+// 调整画笔颜色,小圆点颜色跟着变化
+colorPick.addEventListener('click', function(e){
+  e = window.e || e;
+  let target = e.target || e.srcElement;
+  if(target.tagName === 'LI'){
+    color = target.id;
+    dot.style.backgroundColor = `${color}`;
+  }
+},false)
 function initCanvas(canvas) {
   // 初始宽高为满屏
   setCanvasWidth();
@@ -116,18 +130,18 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
 
   }
   function drawCircle(canvas, context, pos) {  // 画圆
-    context.fillStyle = "black";
+    context.fillStyle = color;
     context.beginPath();
-    context.arc(pos.x, pos.y, toolSize, 0, Math.PI * 2);
+    context.arc(pos.x, pos.y, size/2, 0, Math.PI * 2);
     context.fill();
   }
   function clearCircle(canvas, context, pos) {
     context.fillStyle = "rgb(250, 249, 222)";
-    context.fillRect((pos.x-toolSize*7.5), (pos.y-toolSize*7.5), toolSize*15, toolSize*15);
+    context.fillRect((pos.x-size*7.5), (pos.y-size*7.5), size*15, size*15);
   }
   function drawLine(canvas, context, lastPointObj, x, y) { // 画线
-    context.strokeStyle = "black";
-    context.lineWidth = toolSize;
+    context.strokeStyle = color;
+    context.lineWidth = size;
     context.beginPath();
     context.moveTo(lastPointObj.x, lastPointObj.y);
     context.lineTo(x, y);

@@ -1,39 +1,20 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-}
-
-body {
-  overflow: hidden;
-}
-
-canvas {
-  background: RGB(250, 249, 222);
-  display: block;
-  position: relative;
-}
-
-svg.tool {
-  width: 2.5rem;
-  height: 2.5rem;
-  display: inline-block;
-  border-radius: 35%;
-  padding: 6px;
-}
-
-svg.tool:hover {
-  background: rgb(222, 222, 222);
-  cursor: pointer;
-}
-
-.currentTool {
-  fill: rgb(26, 159, 255);
-}
+* {  margin: 0;  padding: 0;  box-sizing: border-box; }
+ul,ol{ list-style: none; }
+.icon {  width: 1em;  height: 1em;  vertical-align: -0.15em;  fill: currentColor;}
+html { min-width: 100px; }
+body {  overflow: hidden; }
+header {  padding: .06rem .1rem; display: flex; justify-content: space-between; align-items: center;}
+canvas {  background: RGB(250, 249, 222);  display: block;  position: relative;}
+svg.tool {  width: .3rem;  height: .3rem;  margin-right: .18rem;  display: inline-block;  border-radius: 35%;}
+svg.tool:hover {  background: rgb(222, 222, 222);  cursor: pointer;}
+.currentTool { fill: rgb(26, 159, 255);}
+.header-left {  display: flex;  align-items: center;}
+div.size {  font-size: .16rem;  cursor: pointer;}
+div.point {  width: .09rem;  height: .09rem;  border-radius: 50%;  margin: 0 auto;  background-color: black;}
+ul.color li{  float: left; cursor: pointer; border-radius: 50%;  width: .26rem;  height: .26rem;  padding: 1px;  border: 1px solid rgba(192, 192, 192, 0.8);  margin-right: .1rem;}
+ul.color li#red {background: red;}
+ul.color li#gray {background: gray;}
+ul.color li#blue {background: blue;}
+ul.color li#black {background: black;}
+ul.color li#yellow {background: yellow;}
+.clearfix::after {  content: '';  display: block;  clear: both;}
