@@ -33,19 +33,32 @@ eraser.addEventListener('touchend', function () {
 // 监听用户操作
 listenToUser(canvas, ifDraw, ifClear, lastPoint);
 // 调整画笔粗细
-sizeDiv.addEventListener('click',function(){
-  size < 5 ? (size ++) : (size = 1);
+sizeDiv.addEventListener('click', function () {
+  size < 5 ? (size++) : (size = 1);
   sizeDiv.getElementsByTagName('span')[0].innerText = size;
-},false);
+}, false);
 // 调整画笔颜色,小圆点颜色跟着变化
-colorPick.addEventListener('click', function(e){
+colorPick.addEventListener('click', function (e) {
   e = window.e || e;
   let target = e.target || e.srcElement;
-  if(target.tagName === 'LI'){
+  if (target.tagName === 'LI') {
     color = target.id;
     dot.style.backgroundColor = `${color}`;
   }
-},false)
+}, false)
+// 一键清空功能
+clear.addEventListener('click', function () {
+  if (window.confirm('是否确定删除?')) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}, false)
+// 下载功能
+download.onclick = function(){
+  var link = document.createElement('a');
+  link.download = 'myCanvas.png';
+  link.href = document.getElementById('canvas').toDataURL()
+  link.click();
+}
 function initCanvas(canvas) {
   // 初始宽高为满屏
   setCanvasWidth();
@@ -132,12 +145,12 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
   function drawCircle(canvas, context, pos) {  // 画圆
     context.fillStyle = color;
     context.beginPath();
-    context.arc(pos.x, pos.y, size/2, 0, Math.PI * 2);
+    context.arc(pos.x, pos.y, size / 2, 0, Math.PI * 2);
     context.fill();
   }
   function clearCircle(canvas, context, pos) {
     context.fillStyle = "rgb(250, 249, 222)";
-    context.fillRect((pos.x-size*7.5), (pos.y-size*7.5), size*15, size*15);
+    context.fillRect((pos.x - size * 7.5), (pos.y - size * 7.5), size * 15, size * 15);
   }
   function drawLine(canvas, context, lastPointObj, x, y) { // 画线
     context.strokeStyle = color;
