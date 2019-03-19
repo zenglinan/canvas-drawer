@@ -151,7 +151,7 @@ function listenToUser(canvas, ifDraw, ifClear, lastPoint) {
     context.fill();
   }
   function clearCircle(canvas, context, pos) {
-    context.fillStyle = "rgb(250, 249, 222)";
+    context.fillStyle = "white";
     context.fillRect((pos.x - size * 7.5), (pos.y - size * 7.5), size * 15, size * 15);
   }
   function drawLine(canvas, context, lastPointObj, x, y) { // 画线
