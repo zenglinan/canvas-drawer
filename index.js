@@ -6,7 +6,6 @@ let ifClear = false;  // 是否擦除的标志
 let lastPoint;  // 记录上一个点
 let color = 'black'
 let size = 1;
-
 // 初始化画板
 initCanvas(canvas);
 context.fillStyle = 'white';
@@ -48,6 +47,10 @@ colorPick.addEventListener('click', function (e) {
     dot.style.backgroundColor = `${color}`;
   }
 }, false)
+colorSelector.addEventListener('change', function () {
+  color = window.colorSelector.value;
+  dot.style.backgroundColor = `${color}`;
+})
 // 一键清空功能
 clear.addEventListener('click', function () {
   if (window.confirm('是否确定删除?')) {
@@ -55,7 +58,7 @@ clear.addEventListener('click', function () {
   }
 }, false)
 // 下载功能
-download.onclick = function(){
+download.onclick = function () {
   var link = document.createElement('a');
   link.download = 'myCanvas.jpg';
   link.href = document.getElementById('canvas').toDataURL('image/jpg');
