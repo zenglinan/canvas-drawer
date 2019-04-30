@@ -30,6 +30,6 @@ ul.color li#gray {background: gray;}
 ul.color li#blue {background: blue;}
 ul.color li#black {background: black;}
 ul.color li#yellow {background: yellow;}
-input#colorSelector { position: absolute; right: 0; width: .3rem;  height: .3rem; z-index: 99; opacity: 0; cursor: pointer;}
+#colorSelector { position: absolute; right: 0; width: .3rem;  height: .3rem; z-index: 99; opacity: 0; cursor: pointer;}
 #colorSelectorIcon {width: .3rem;  height: .3rem; z-index: -1; position: absolute; right: 0; cursor: pointer;}
 .clearfix::after { content: '';  display: block;  clear: both;}
